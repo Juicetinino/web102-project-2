@@ -1,54 +1,29 @@
-import { useState, useEffect } from 'react';
+const cards = [
+    { question: "Click next to start", answer: "Click next to start" },
+    { question: "Prince Edward Island", answer: "Charlottetown" },
+    { question: "Alberta", answer: "Edmonton" },
+    { question: "New Brunswick", answer: "Fredericton" },
+    { question: "Nova Scotia", answer: "Halifax" },
+    { question: "Nunavut", answer: "Iqaluit" },
+    { question: "Quebec", answer: "Quebec City" },
+    { question: "Saskatchewan", answer: "Regina" },
+    { question: "Newfoundland & Labrador", answer: "St. John's" },
+    { question: "Ontario", answer: "Toronto" },
+    { question: "British Columbia", answer: "Victoria" },
+    { question: "Yukon", answer: "Whitehorse" },
+    { question: "Manitoba", answer: "Winnipeg" },
+    { question: "Northwest Territories", answer: "Yellowknife" },
+    { question: "Canada", answer: "Ottawa" },
+];
+export const length = cards.length;
 
-const cards = {
-    "Click next to start": "Click next to start",
-    "Prince Edward Island": "Charlottetown",
-    "Alberta": "Edmonton",
-    "New Brunswick": "Fredericton",
-    "Nova Scotia": "Halifax",
-    "Nunavut": "Iqaluit",
-    "Canada": "Ottawa",
-    "Quebec": "Quebec City",
-    "Saskatchewan": "Regina",
-    "Newfoundland & Labrador": "St. Johns",
-    "Ontario": "Toronto",
-    "British Columbia": "Victoria",
-    "Yukon": "Whitehorse",
-    "Manitoba": "Winnipeg",
-    "Northwest Territories": "Yellowknife",
-};
-const keys = Object.keys(cards);
-export const length = keys.length;
+const Flashcard = ({ cardNum, cardSide, animate, onFlip }) => {
 
-const Flashcard = ({ nextCardRef }) => {
-    const [cardNum, setCardNum] = useState(0);
-    const [cardSide, setCardSide] = useState("question");
-    const [animate, setAnimate] = useState(true);
-
-    const question = keys[cardNum]
-    const answer = cards[keys[cardNum]]
-
-    const nextCard = () => {
-        let nextCardNum = cardNum
-        while (nextCardNum === cardNum) {
-            nextCardNum = Math.floor(Math.random() * (length - 1)) + 1
-        }
-        setAnimate(false);
-        setCardNum(nextCardNum);
-        setCardSide("question");
-        requestAnimationFrame(() => setAnimate(true));
-    }
-
-    useEffect(() => {
-        if (nextCardRef) nextCardRef.current = nextCard;
-    }, [nextCard])
-
-    const flipCard = () => {
-        setCardSide(prev => prev === "question" ? "answer" : "question");
-    }
+    const question = cards[cardNum].question;
+    const answer = cards[cardNum].answer;
 
     return (
-        <div className={`InfoCard ${cardSide === "answer" ? "flipped" : ""}`} onClick={flipCard}>
+        <div className={`InfoCard ${cardSide === "answer" ? "flipped" : ""}`} onClick={onFlip}>
             <div className="flip-card-inner" style={{ transition: animate ? "transform 0.2s ease-in-out" : "none" }}>
                 <div className="flip-card-front">
                     <h2>{question}</h2>
@@ -58,7 +33,7 @@ const Flashcard = ({ nextCardRef }) => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default Flashcard;
