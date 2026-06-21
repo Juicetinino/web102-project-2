@@ -12,7 +12,7 @@ const App = () => {
     let nextCardNum = cardNum;
     // Ensure the next cardNum is different from current
     while (nextCardNum === cardNum) {
-      // should give a integers between 1 and length - 1 ("Click next to start" is unreachable.)
+      // should give an integer between 1 and length - 1 ("Click next to start" is unreachable.)
       nextCardNum = Math.floor(Math.random() * (length - 1)) + 1;
     }
     setAnimate(false);
